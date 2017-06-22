@@ -13,7 +13,7 @@
 Instantiate a new Angular module called `blog` that takes `ui.router` as a dependency.
 
 ```js
-// Your answer goes here...
+angular.module('blog',['ui.router'])
 ```
 
 ### Question 2
@@ -26,7 +26,7 @@ One button below has an `ng-click` attribute; the other has `data-ng-click` inst
 ```
 
 ```text
-Your answer goes here...
+They will both work but 'data-ng-click' is valid HTML according to HTML5 standards
 ```
 
 ### Question 3
@@ -34,7 +34,7 @@ Your answer goes here...
 Which of the three following options demonstrates the best usage of `ng-app`? **Explain your answer.**
 
 ```text
-Your answer goes here...
+Box A demonstrates the best usage of 'ng-app' because it encapsulates the entire html file. Every thing within this html will respond to angular directives
 ```
 
 #### A
@@ -91,7 +91,7 @@ Which one of the following concepts does this best illustrate?
 ```
 [ ] A: Modularity
 [ ] B: MVC
-[ ] C: Two-way data-binding
+[X] C: Two-way data-binding
 [ ] D: Separation of concerns
 ```
 
@@ -100,7 +100,7 @@ Which one of the following concepts does this best illustrate?
 What is the `ui-sref` directive, and how is it used?
 
 ```text
-Your answer goes here...
+'ui-sref' is a directive that works in conjuction with ui-view. In 'ui-sref' you would put the state that you want to link to instead of a different url. When clicked the user is taken to the corresponding state.
 ```
 
 ## Part II: APIs & AJAX
@@ -118,29 +118,58 @@ end
 ```
 
 ```rb
-# Your answer goes here...
+  def index
+  @post = Post..all
+
+    respond_to do | format |
+      format.html {render :index}
+      format.json {render json: @post}
+    end
+  end
 ```
 
 ### Question 7
 
-Let's say the Posts in the previous question are available at `http://localhost:3000/posts`. In a front-end application, how could you do the following using AJAX?  
-    1. Retrieve all the posts in JSON form  
-    2. If Step 1 is successful, print the resulting JSON to the console  
-    3. If Step 1 is unsuccessful, print an error message to the console  
+Let's say the Posts in the previous question are available at `http://localhost:3000/posts`. In a front-end application, how could you do the following using AJAX?
+    1. Retrieve all the posts in JSON form
+    2. If Step 1 is successful, print the resulting JSON to the console
+    3. If Step 1 is unsuccessful, print an error message to the console
 
 ```js
-// Your answer goes here...
+      $.getJSON('http://localhost:3000/posts', function(res){
+        if (res) {
+        console.log(res);
+        } else {
+          console.log('API call failed')
+        }
+      })
 ```
 
 ### Question 8
 
-Using the same front-end application and Rails API from the previous question, how would you use AJAX to create a Post through the API? You can assume the following...  
-    - The API is RESTful  
-    - The `PostsController` contains a strong params method that is used when creating an instance of the `Post` model  
-    - Each Post has `title` and `body` attributes, both of which are strings  
+Using the same front-end application and Rails API from the previous question, how would you use AJAX to create a Post through the API? You can assume the following...
+    - The API is RESTful
+    - The `PostsController` contains a strong params method that is used when creating an instance of the `Post` model
+    - Each Post has `title` and `body` attributes, both of which are strings
 
 If the Post creation is successful, the new Post should be printed to the browser console. Otherwise, an error message should be printed to the console.
 
 ```js
-// Your answer goes here...
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:3000/posts.json',
+    data: {
+      "post": {
+        "title": "New Post",
+        "body":"Content for days"
+      }
+    },
+    dataType: 'json',
+    success: function(res){
+      console.log(res)
+    },
+    error: function(){
+      console.log('The post was not succesful')
+    }
+  })
 ```
